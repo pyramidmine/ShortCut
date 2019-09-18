@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqTest", "LinqTest\LinqTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringFormatTest", "StringFormatTest\StringFormatTest.csproj", "{570ED7CA-ACB6-4456-AA1E-E7958A35CC28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delimeter", "Delimeter\Delimeter.csproj", "{B44CB8B3-383A-43D5-8A0C-DD658D44CAD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyInitializationOnConstructor", "PropertyInitializationOnConstructor\PropertyInitializationOnConstructor.csproj", "{ED8D5712-9E23-4037-86A4-861532034C7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{570ED7CA-ACB6-4456-AA1E-E7958A35CC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{570ED7CA-ACB6-4456-AA1E-E7958A35CC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{570ED7CA-ACB6-4456-AA1E-E7958A35CC28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B44CB8B3-383A-43D5-8A0C-DD658D44CAD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B44CB8B3-383A-43D5-8A0C-DD658D44CAD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B44CB8B3-383A-43D5-8A0C-DD658D44CAD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B44CB8B3-383A-43D5-8A0C-DD658D44CAD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8D5712-9E23-4037-86A4-861532034C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8D5712-9E23-4037-86A4-861532034C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8D5712-9E23-4037-86A4-861532034C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8D5712-9E23-4037-86A4-861532034C7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
