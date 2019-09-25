@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delimeter", "Delimeter\Deli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyInitializationOnConstructor", "PropertyInitializationOnConstructor\PropertyInitializationOnConstructor.csproj", "{ED8D5712-9E23-4037-86A4-861532034C7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericCollections", "GenericCollections\GenericCollections.csproj", "{4A1F7EBE-EEA4-45E2-8C0D-31CBBDBAF9E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{ED8D5712-9E23-4037-86A4-861532034C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED8D5712-9E23-4037-86A4-861532034C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED8D5712-9E23-4037-86A4-861532034C7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A1F7EBE-EEA4-45E2-8C0D-31CBBDBAF9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1F7EBE-EEA4-45E2-8C0D-31CBBDBAF9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1F7EBE-EEA4-45E2-8C0D-31CBBDBAF9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1F7EBE-EEA4-45E2-8C0D-31CBBDBAF9E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
