@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = silent
+
+# RCS1213: Remove unused member declaration.
+dotnet_diagnostic.RCS1213.severity = none
