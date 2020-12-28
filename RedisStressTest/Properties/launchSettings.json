@@ -2,7 +2,7 @@
   "profiles": {
     "RedisStressTest": {
       "commandName": "Project",
-      "commandLineArgs": "192.168.0.46:16379 Ekswnr59"
+      "commandLineArgs": "192.168.0.46:16379 Ekswnr59 10000"
     }
   }
 }
