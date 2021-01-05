@@ -10,29 +10,30 @@ namespace ConfigurationUnitTests
 	public class ConfigurationTest
 	{
 		/// <summary>
-		/// È¯°æº¯¼ö Å×½ºÆ®
+		/// í™˜ê²½ë³€ìˆ˜ í…ŒìŠ¤íŠ¸
 		/// </summary>
 		/// <remarks>
-		/// - È¯°æº¯¼ö¸¦ ÀÌ¿ëÇØ¼­ ·±Å¸ÀÓ È¯°æ¿¡ µû¶ó µ¿ÀÛÀ» ¹Ù²Ü ¼ö ÀÖÀ½
-		///   ¿¹¸¦ µé¾î, SERVER_TYPE È¯°æº¯¼ö°¡ REAL ÀÌ¸é »ó¿ë¼­¹ö, STAGE ÀÌ¸é ½ºÅ×ÀÌÁö¼­¹ö µîÀ¸·Î ±¸ºĞÇÒ ¼ö ÀÖÀ½
-		///   ÀÌ°ÍÀ» È°¿ëÇØ¼­, appsettings.{env}.json ÆÄÀÏÀ» ÀĞ¾îµéÀÌ¸é ¼­¹ö Å¸ÀÔ¿¡ µû¶ó ¾Ë¸ÂÀº ¼³Á¤ÆÄÀÏÀ» »ç¿ë °¡´É
+		/// - í™˜ê²½ë³€ìˆ˜ë¥¼ ì´ìš©í•´ì„œ ëŸ°íƒ€ì„ í™˜ê²½ì— ë”°ë¼ ë™ì‘ì„ ë°”ê¿€ ìˆ˜ ìˆìŒ
+		///   ì˜ˆë¥¼ ë“¤ì–´, SERVER_TYPE í™˜ê²½ë³€ìˆ˜ê°€ REAL ì´ë©´ ìƒìš©ì„œë²„, STAGE ì´ë©´ ìŠ¤í…Œì´ì§€ì„œë²„ ë“±ìœ¼ë¡œ êµ¬ë¶„í•  ìˆ˜ ìˆìŒ
+		///   ì´ê²ƒì„ í™œìš©í•´ì„œ, appsettings.{env}.json íŒŒì¼ì„ ì½ì–´ë“¤ì´ë©´ ì„œë²„ íƒ€ì…ì— ë”°ë¼ ì•Œë§ì€ ì„¤ì •íŒŒì¼ì„ ì‚¬ìš© ê°€ëŠ¥
 		/// </remarks>
 		[Fact]
 		public void TestGetEnvironmentVariable()
 		{
+			// í™˜ê²½ë³€ìˆ˜ ì¡°íšŒ
 			var env = Environment.GetEnvironmentVariable("ALLUSERSPROFILE");
 			Assert.Equal(@"C:\ProgramData", env);
 
-			// Á¸ÀçÇÏÁö ¾Ê´Â È¯°æº¯¼ö¸¦ Á¶È¸ÇÏ¸é null
+			// ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í™˜ê²½ë³€ìˆ˜ë¥¼ ì¡°íšŒí•˜ë©´ null
 			var none = Environment.GetEnvironmentVariable("FOOBAR");
 			Assert.Null(none);
 		}
 
 		/// <summary>
-		/// È¯°æº¯¼ö¸¦ ÄÁÇÇ±Ô·¹ÀÌ¼Ç¿¡ Ãß°¡ÇØ¼­ Á¶È¸
+		/// í™˜ê²½ë³€ìˆ˜ë¥¼ ì»¨í”¼ê·œë ˆì´ì…˜ì— ì¶”ê°€í•´ì„œ ì¡°íšŒ
 		/// </summary>
 		/// <remarks>
-		/// È¯°æº¯¼öµµ ÄÁÇÇ±Ô·¹ÀÌ¼ÇÃ³·³ ´Ù·ê ¼ö ÀÖÀ½
+		/// í™˜ê²½ë³€ìˆ˜ë„ ì»¨í”¼ê·œë ˆì´ì…˜ì²˜ëŸ¼ ë‹¤ë£° ìˆ˜ ìˆìŒ
 		/// </remarks>
 		[Fact]
 		public void TestAddEnvironmentVariables()
@@ -41,47 +42,51 @@ namespace ConfigurationUnitTests
 				.AddEnvironmentVariables();
 			var config = builder.Build();
 
-			Assert.Equal(@"C:\ProgramData", config["ALLUSERSPROFILE"]);
+			Assert.Equal(@"C:\Program Files", config["ProgramFiles"]);
 
-			// Á¸ÀçÇÏÁö ¾Ê´Â Ç×¸ñÀ» Á¶È¸ÇÏ¸é null
-			// ¸®ÅÏ°ªÀÌ nullÀÏ»Ó Á¶È¸ÇÏ´Â °Í ÀÚÃ¼´Â ¹®Á¦¾øÀ½
+			// ì¡´ì¬í•˜ì§€ ì•ŠëŠ” í•­ëª©ì„ ì¡°íšŒí•˜ë©´ null
+			// ë¦¬í„´ê°’ì´ nullì¼ë¿ ì¡°íšŒí•˜ëŠ” ê²ƒ ìì²´ëŠ” ë¬¸ì œì—†ìŒ
 			var none = config["FOOBAR"];
 			Assert.Null(none);
 		}
 
 		/// <summary>
-		/// ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏ ÀĞ±â
+		/// ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ ì½ê¸°
 		/// </summary>
 		/// <remarks>
-		/// - ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏ¿¡ °æ·Î°¡ µû·Î ¾øÀ» °æ¿ì, ½ÇÇàÆÄÀÏ°ú °°Àº µğ·ºÅÍ¸®¿¡¼­ Ã£À½
-		/// - °³¹ßÇÒ ¶§´Â ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏÀ» Output µğ·ºÅÍ¸®¿¡ º¹»çÇÏ´Â ¼³Á¤À» ÄÑ µÎ¾î¾ß ÇÔ
-		/// - ÆÄÀÏ º¯°æ ÈÄ ´Ù½Ã ÀĞ±â Àü±îÁö ¾à°£ÀÇ µô·¹ÀÌ°¡ ÀÖÀ½. ReloadDelay = 250 µîÀ¸·Î Á¤ÀÇµÇ¹Ç·Î Å×½ºÆ® ÇÒ ¶§´Â ÀÌ ½Ã°£À» °¨¾ÈÇØ¾ß µÊ
+		/// - ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì— ê²½ë¡œê°€ ë”°ë¡œ ì—†ì„ ê²½ìš°, ì‹¤í–‰íŒŒì¼ê³¼ ê°™ì€ ë””ë ‰í„°ë¦¬ì—ì„œ ì°¾ìŒ
+		/// - ê°œë°œí•  ë•ŒëŠ” ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ Output ë””ë ‰í„°ë¦¬ì— ë³µì‚¬í•˜ëŠ” ì„¤ì •ì„ ì¼œ ë‘ì–´ì•¼ í•¨
+		/// - íŒŒì¼ ë³€ê²½ í›„ ë‹¤ì‹œ ì½ê¸° ì „ê¹Œì§€ ì•½ê°„ì˜ ë”œë ˆì´ê°€ ìˆìŒ. ReloadDelay = 250 ë“±ìœ¼ë¡œ ì •ì˜ë˜ë¯€ë¡œ í…ŒìŠ¤íŠ¸ í•  ë•ŒëŠ” ì´ ì‹œê°„ì„ ê°ì•ˆí•´ì•¼ ë¨
 		/// </remarks>
 		[Fact]
 		public void TestLoadConfigurationFile()
 		{
-			const string configFilename = "appsettings.json";
+			const string origConfigFilename = "appsettings.json";
+			const string testConfigFilename = "appsettings.testLoadConfiguration.json";
 			const string hostKey = "Hermes-Server:Host";
 			const string portKey = "Hermes-Server:Port";
 			const string hermesServerTag = "Hermes-Server";
 			const string hostTag = "Host";
 			const string portTag = "Port";
 
-			// ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏ ÀĞ±â
-			// ÀÌ¶§, ÆÄÀÏÀÌ º¯°æµÇ¸é ÀÚµ¿À¸·Î ´Ù½Ã ÀĞµµ·Ï reloadOnChange = true ¼³Á¤
+			// ì›ë³¸ ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ ë³µì‚¬í•´ì„œ í…ŒìŠ¤íŠ¸ì— ì‚¬ìš©
+			File.Copy(origConfigFilename, testConfigFilename, overwrite: true);
+
+			// ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ ì½ê¸°
+			// ì´ë•Œ, íŒŒì¼ì´ ë³€ê²½ë˜ë©´ ìë™ìœ¼ë¡œ ë‹¤ì‹œ ì½ë„ë¡ reloadOnChange = true ì„¤ì •
 			var builder = new ConfigurationBuilder()
-				.AddJsonFile(configFilename, true, reloadOnChange: true);
+				.AddJsonFile(testConfigFilename, true, reloadOnChange: true);
 			var config = builder.Build();
 
 			var origServerSettings = new { Host = "0.0.0.0", Port = "37999" };
 
-			// ´Ù´Ü°è Å°¸¦ Ã£À» ¶§´Â Áß°£¿¡ Äİ·Ğ(:)À» ³Ö¾îÁÖ¸é µÊ
+			// ë‹¤ë‹¨ê³„ í‚¤ë¥¼ ì°¾ì„ ë•ŒëŠ” ì¤‘ê°„ì— ì½œë¡ (:)ì„ ë„£ì–´ì£¼ë©´ ë¨
 			Assert.Equal(origServerSettings.Host, config[hostKey]);
 			Assert.Equal(origServerSettings.Port, config[portKey]);
 
-			// ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏ º¯°æ
+			// ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ ë³€ê²½
 			var changedServerSettings = new { Host = "127.0.0.1", Port = "37998" };
-			using (var fs = new FileStream(configFilename, FileMode.Create))
+			using (var fs = new FileStream(testConfigFilename, FileMode.Create))
 			{
 				using (var writer = new Utf8JsonWriter(fs, new JsonWriterOptions { Indented = true }))
 				{
@@ -95,15 +100,15 @@ namespace ConfigurationUnitTests
 				fs.Flush();
 			}
 
-			// ReloadDelay ½Ã°£ÀÌ ÀÖÀ¸¹Ç·Î Àá½Ã ´ë±â
+			// ReloadDelay ì‹œê°„ì´ ìˆìœ¼ë¯€ë¡œ ì ì‹œ ëŒ€ê¸°
 			Thread.Sleep(500);
 
-			// º¯°æµÈ ¼³Á¤ÀÌ ¹İ¿µµÇ¾ú´ÂÁö È®ÀÎ
+			// ë³€ê²½ëœ ì„¤ì •ì´ ë°˜ì˜ë˜ì—ˆëŠ”ì§€ í™•ì¸
 			Assert.Equal(changedServerSettings.Host, config[hostKey]);
 			Assert.Equal(changedServerSettings.Port, config[portKey]);
 
-			// ¼³Á¤ÆÄÀÏÀ» ¿ø·¡´ë·Î º¹¿ø
-			using (var fs = new FileStream(configFilename, FileMode.Create))
+			// ì„¤ì •íŒŒì¼ì„ ì›ë˜ëŒ€ë¡œ ë³µì›
+			using (var fs = new FileStream(testConfigFilename, FileMode.Create))
 			{
 				using (var writer = new Utf8JsonWriter(fs, new JsonWriterOptions { Indented = true }))
 				{
@@ -117,16 +122,16 @@ namespace ConfigurationUnitTests
 				fs.Flush();
 			}
 
-			// ReloadDelay ½Ã°£ÀÌ ÀÖÀ¸¹Ç·Î Àá½Ã ´ë±â
+			// ReloadDelay ì‹œê°„ì´ ìˆìœ¼ë¯€ë¡œ ì ì‹œ ëŒ€ê¸°
 			Thread.Sleep(500);
 
-			// ¿ø·¡ ¼³Á¤À¸·Î µ¹¾Æ¿Ô´ÂÁö È®ÀÎ
+			// ì›ë˜ ì„¤ì •ìœ¼ë¡œ ëŒì•„ì™”ëŠ”ì§€ í™•ì¸
 			Assert.Equal(origServerSettings.Host, config[hostKey]);
 			Assert.Equal(origServerSettings.Port, config[portKey]);
 		}
 
 		/// <summary>
-		/// ¿©·¯ °³ÀÇ ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏÀ» ÀĞ±â
+		/// ì—¬ëŸ¬ ê°œì˜ ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ ì½ê¸°
 		/// </summary>
 		[Fact]
 		public void TestLoadMultipleConfigurationFiles()
@@ -137,22 +142,28 @@ namespace ConfigurationUnitTests
 			const string portKey = "Hermes-Server:Port";
 			const string packetTypeKey = "PacketType";
 
-			// packetConfigFilename¿¡ ÇØ´çÇÏ´Â ÆÄÀÏÀº ¾ø´Â »óÅÂ¿¡¼­ ¿©·¯ °³ÀÇ ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏ ·Îµå
+			// í…ŒìŠ¤íŠ¸ ì¤‘ì— ë§Œë“¤ì–´ì§€ëŠ” íŒŒì¼ì´ ì´ë¯¸ ì¡´ì¬í•˜ë©´ ì‚­ì œí•˜ê³  ì‹œì‘
+			if (File.Exists(packetConfigFilename))
+			{
+				File.Delete(packetConfigFilename);
+			}
+
+			// packetConfigFilenameì— í•´ë‹¹í•˜ëŠ” íŒŒì¼ì€ ì—†ëŠ” ìƒíƒœì—ì„œ ì—¬ëŸ¬ ê°œì˜ ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ ë¡œë“œ
 			var builder = new ConfigurationBuilder()
 				.AddJsonFile(appConfigFilename, true, true)
 				.AddJsonFile(packetConfigFilename, true, true);
 			var config = builder.Build();
 
-			// Á¸ÀçÇÏ´Â ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏÀº Á¤»ó ·Îµå µÇ´ÂÁö È®ÀÎ
+			// ì¡´ì¬í•˜ëŠ” ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì€ ì •ìƒ ë¡œë“œ ë˜ëŠ”ì§€ í™•ì¸
 			var origServerSettings = new { Host = "0.0.0.0", Port = "37999" };
 			Assert.Equal(origServerSettings.Host, config[hostKey]);
 			Assert.Equal(origServerSettings.Port, config[portKey]);
 
-			// Á¸ÀçÇÏÁö ¾Ê´Â ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏÀº ´ç¿¬È÷ null
+			// ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì€ ë‹¹ì—°íˆ null
 			Assert.Null(config[packetTypeKey]);
 
-			// Á¸ÀçÇÏÁö ¾Ê´Â ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏÀ» ·±Å¸ÀÓ¿¡ Ãß°¡
-			// ÀÌ¶§ ÀÚµ¿À¸·Î ÄÁÇÇ±Ô·¹ÀÌ¼ÇÀ» ÀĞ¾î¿À´ÂÁö È®ÀÎ
+			// ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ ëŸ°íƒ€ì„ì— ì¶”ê°€
+			// ì´ë•Œ ìë™ìœ¼ë¡œ ì»¨í”¼ê·œë ˆì´ì…˜ì„ ì½ì–´ì˜¤ëŠ”ì§€ í™•ì¸
 			var packetSettings = new { PacketType = "Login" };
 
 			using (var fs = new FileStream(packetConfigFilename, FileMode.Create))
@@ -166,29 +177,92 @@ namespace ConfigurationUnitTests
 				fs.Flush();
 			}
 
-			// ReloadDelay ½Ã°£ÀÌ ÀÖÀ¸¹Ç·Î Àá½Ã ´ë±â
+			// ReloadDelay ì‹œê°„ì´ ìˆìœ¼ë¯€ë¡œ ì ì‹œ ëŒ€ê¸°
 			Thread.Sleep(500);
 
-			// Ãß°¡µÈ ¼³Á¤ÀÌ ÀÚµ¿À¸·Î ·ÎµåµÇ¾ú´ÂÁö È®ÀÎ
+			// ì¶”ê°€ëœ ì„¤ì •ì´ ìë™ìœ¼ë¡œ ë¡œë“œë˜ì—ˆëŠ”ì§€ í™•ì¸
 			Assert.Equal(packetSettings.PacketType, config[packetTypeKey]);
 
-			// Ãß°¡µÈ ¼³Á¤ ÆÄÀÏÀ» »èÁ¦
+			// ì¶”ê°€ëœ ì„¤ì • íŒŒì¼ì„ ì‚­ì œ
 			File.Delete(packetConfigFilename);
 
-			// ReloadDelay ½Ã°£ÀÌ ÀÖÀ¸¹Ç·Î Àá½Ã ´ë±â
+			// ReloadDelay ì‹œê°„ì´ ìˆìœ¼ë¯€ë¡œ ì ì‹œ ëŒ€ê¸°
 			Thread.Sleep(500);
 
-			// »èÁ¦µÈ ¼³Á¤ ÆÄÀÏÀÇ ¼³Á¤ÀÌ nullÀÎÁö È®ÀÎ
+			// ì‚­ì œëœ ì„¤ì • íŒŒì¼ì˜ ì„¤ì •ì´ nullì¸ì§€ í™•ì¸
 			Assert.Null(config[packetTypeKey]);
 		}
 
 		/// <summary>
-		/// ¿ÍÀÏµåÄ«µå·Î ÁöÁ¤µÈ ÄÁÇÇ±Ô·¹ÀÌ¼Ç ÆÄÀÏ ÀĞ±â
+		/// ì™€ì¼ë“œì¹´ë“œë¡œ ì§€ì •ëœ ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ ì½ê¸°
+		/// --> ë¶ˆê°€ëŠ¥
 		/// </summary>
 		[Fact]
 		public void TestWildcardConfigurationFiles()
 		{
+			const string packetConfigFilename = "wildcardSettings.json";
+			const string wildcardConfigFilename = "wildcard*.json";
+			const string packetTypeKey = "PacketType";
 
+			// í…ŒìŠ¤íŠ¸ ì¤‘ì— ë§Œë“¤ì–´ì§€ëŠ” íŒŒì¼ì´ ì´ë¯¸ ì¡´ì¬í•˜ë©´ ì‚­ì œí•˜ê³  ì‹œì‘
+			if (File.Exists(packetConfigFilename))
+			{
+				File.Exists(packetConfigFilename);
+			}
+
+			// ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ ì™€ì¼ë“œì¹´ë“œë¡œ ì§€ì •í•´ì„œ íŒŒì¼ ë¡œë“œ
+			var builder = new ConfigurationBuilder()
+				.AddJsonFile(wildcardConfigFilename, true, true);
+			var config = builder.Build();
+
+			// ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì´ ì—†ìœ¼ë¯€ë¡œ í•´ë‹¹í•˜ëŠ” ì„¤ì •ì€ nullì¸ì§€ í™•ì¸
+			Assert.Null(config[packetTypeKey]);
+
+			// ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ ëŸ°íƒ€ì„ì— ìƒì„±
+			// ì´ë•Œ ìë™ìœ¼ë¡œ ì»¨í”¼ê·œë ˆì´ì…˜ì„ ì½ì–´ì˜¤ëŠ”ì§€ í™•ì¸
+			// ì™€ì¼ë“œì¹´ë“œë¡œ ì§€ì •ëœ ì»¨í”¼ê·œë ˆì´ì…˜ì´ë¼ëŠ” ê²Œ ì°¨ì´
+			var packetSettings = new { PacketType = "Login" };
+
+			using (var fs = new FileStream(packetConfigFilename, FileMode.Create))
+			{
+				using (var writer = new Utf8JsonWriter(fs, new JsonWriterOptions { Indented = true }))
+				{
+					writer.WriteStartObject();
+					writer.WriteString(packetTypeKey, packetSettings.PacketType);
+					writer.WriteEndObject();
+				}
+				fs.Flush();
+			}
+
+			// ReloadDelay ì‹œê°„ì´ ìˆìœ¼ë¯€ë¡œ ì ì‹œ ëŒ€ê¸°
+			Thread.Sleep(500);
+
+			// ì¶”ê°€ëœ ì„¤ì •ì´ ìë™ìœ¼ë¡œ ë¡œë“œë˜ì—ˆëŠ”ì§€ í™•ì¸í•´ ë´¤ì ì‹¤íŒ¨
+			// ì™€ì¼ë“œì¹´ë“œë¡œ ì§€ì •ëœ íŒŒì¼ì€ ê°ì§€í•˜ì§€ ëª»í•˜ëŠ” ë“¯
+			Assert.Null(config[packetTypeKey]);
+
+			// ì¶”ê°€ëœ ì„¤ì • íŒŒì¼ì„ ì‚­ì œ
+			File.Delete(packetConfigFilename);
+
+			// ReloadDelay ì‹œê°„ì´ ìˆìœ¼ë¯€ë¡œ ì ì‹œ ëŒ€ê¸°
+			Thread.Sleep(500);
+
+			// ì‚­ì œëœ ì„¤ì • íŒŒì¼ì˜ ì„¤ì •ì´ nullì¸ì§€ í™•ì¸
+			Assert.Null(config[packetTypeKey]);
+		}
+
+		/// <summary>
+		/// ëŸ°íƒ€ì„ì— ì»¨í”¼ê·œë ˆì´ì…˜ ì¶”ê°€
+		/// </summary>
+		/// <remarks>
+		/// - í˜„ì¬ëŠ” ì—†ì§€ë§Œ ë‚˜ì¤‘ì— ì¶”ê°€ë  ì§€ ëª¨ë¥´ëŠ” ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ ì™€ì¼ë“œì¹´ë“œë¡œ ì§€ì •í•´ì„œ ê°ì‹œí•´ë„ ì•ˆ ë¨
+		/// - ì™€ì¼ë“œì¹´ë“œëŠ” ì•ˆë˜ë¯€ë¡œ ìš°íšŒí•´ì•¼ í•¨
+		/// - ë©”ì¸/ì„œë¸Œ ì»¨í”¼ê·œë ˆì´ì…˜ìœ¼ë¡œ ë‚˜ëˆ ì„œ ë©”ì¸ ì»¨í”¼ê·œë ˆì´ì…˜ì€ ì„œë¸Œ ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ë“¤ì˜ ëª©ë¡ì„ ì €ì¥
+		/// - ì„œë¸Œ ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ì„ ì¶”ê°€í•´ì•¼ í•˜ë©´ 1) ì„œë¸Œ ì»¨í”¼ê·œë ˆì´ì…˜ íŒŒì¼ ì¶”ê°€ 2) ë©”ì¸ ì»¨í”¼ê·œë ˆì´ì…˜ì— ìˆëŠ” ì„œë¸Œ ì»¨í”¼ê·œë ˆì´ì…˜ ëª©ë¡ ê°±ì‹ 
+		/// </remarks>
+		[Fact]
+		public void TestAddConfigurationFileOnRuntime()
+		{
 		}
 	}
 }
