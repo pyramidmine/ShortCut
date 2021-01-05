@@ -51,7 +51,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManualResetEventSlimTest", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadPoolExceptionTest", "ThreadPoolExceptionTest\ThreadPoolExceptionTest.csproj", "{CB0EEA63-20E8-40B6-A431-B880AA72B662}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancellationTokenSourceTest", "CancellationTokenSourceTest\CancellationTokenSourceTest.csproj", "{AE31F668-8519-4E18-B668-0020F70BECEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CancellationTokenSourceTest", "CancellationTokenSourceTest\CancellationTokenSourceTest.csproj", "{AE31F668-8519-4E18-B668-0020F70BECEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0788685B-8CDC-4D59-BD6F-7BF0CA6BC214}"
 	ProjectSection(SolutionItems) = preProject
@@ -75,6 +75,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomPerformanceTest", "RandomPerformanceTest\RandomPerformanceTest.csproj", "{8F658986-07C5-4004-8875-0EB66B64F1D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisStressTest", "RedisStressTest\RedisStressTest.csproj", "{D1CF0601-7EEF-40E9-A0EC-139BC4802C60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationTest", "ConfigurationTest\ConfigurationTest.csproj", "{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationUnitTests", "ConfigurationUnitTests\ConfigurationUnitTests.csproj", "{DF946017-A0C4-450E-A17D-201FF8789E9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -456,6 +460,30 @@ Global
 		{D1CF0601-7EEF-40E9-A0EC-139BC4802C60}.Release|x64.Build.0 = Release|Any CPU
 		{D1CF0601-7EEF-40E9-A0EC-139BC4802C60}.Release|x86.ActiveCfg = Release|Any CPU
 		{D1CF0601-7EEF-40E9-A0EC-139BC4802C60}.Release|x86.Build.0 = Release|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Debug|x64.Build.0 = Debug|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Debug|x86.Build.0 = Debug|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Release|x64.ActiveCfg = Release|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Release|x64.Build.0 = Release|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Release|x86.ActiveCfg = Release|Any CPU
+		{F3B00325-558D-44AC-ACF0-F814F9F5E2AF}.Release|x86.Build.0 = Release|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Debug|x64.Build.0 = Debug|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Debug|x86.Build.0 = Debug|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Release|x64.ActiveCfg = Release|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Release|x64.Build.0 = Release|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Release|x86.ActiveCfg = Release|Any CPU
+		{DF946017-A0C4-450E-A17D-201FF8789E9D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
