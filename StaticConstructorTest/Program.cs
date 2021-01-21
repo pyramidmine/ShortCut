@@ -5,7 +5,17 @@ namespace StaticConstructorTest
 {
 	// 제네릭 타입 파라미터를 매 번 지정하기 번거로우면
 	// using 구문을 사용해서 간단하게 사용할 수 있음
-	using PacketFactory = PacketFactory<int>;
+	using PacketFactory = PacketFactory<PacketKeys>;
+
+	/// <summary>
+	/// 패킷 키를 enum으로 정의
+	/// </summary>
+	internal enum PacketKeys
+	{
+		LoginPacket = 1,
+		LoginResponsePacket,
+		LogoutPacket,
+	}
 
 	internal static class Program
 	{
@@ -13,10 +23,14 @@ namespace StaticConstructorTest
 		{
 			Console.WriteLine("Hello World!");
 
-			TestCreatePacket(1);
+			// 존재하는 패킷 생성 테스트
+			TestCreatePacket(PacketKeys.LoginPacket);
+
+			// 존재하지 않는 패킷 생성 테스트
+			TestCreatePacket(PacketKeys.LoginResponsePacket);
 		}
 
-		private static void TestCreatePacket(int packetKey)
+		private static void TestCreatePacket(PacketKeys packetKey)
 		{
 			Console.WriteLine($"Program.TestCreatePacket: packetKey={packetKey}");
 
@@ -57,7 +71,7 @@ namespace StaticConstructorTest
 		static LoginPacket()
 		{
 			Console.WriteLine("LoginPacket.sctor");
-			PacketFactory.RegisterPacket(1, typeof(LoginPacket));
+			PacketFactory.RegisterPacket(PacketKeys.LoginPacket, typeof(LoginPacket));
 		}
 
 		public LoginPacket()
@@ -66,6 +80,22 @@ namespace StaticConstructorTest
 		}
 
 		override public string Description { get { return "Login Packet"; } }
+	}
+
+	internal class LogoutPacket : Packet
+	{
+		static LogoutPacket()
+		{
+			Console.WriteLine("LogoutPacket.sctor");
+			PacketFactory.RegisterPacket(PacketKeys.LoginPacket, typeof(LogoutPacket));
+		}
+
+		public LogoutPacket()
+		{
+			Console.WriteLine("LogoutPacket.ctor");
+		}
+
+		public override string Description => "Logout Packet";
 	}
 
 	/// <summary>
@@ -129,13 +159,36 @@ namespace StaticConstructorTest
 		/// <param name="key">패킷을 구분하는 키</param>
 		/// <param name="type">등록하려는 패킷 타입</param>
 		/// <remarks>
-		/// - 중복 등록을 검사하는 코드는 일부러 넣지 않았음
-		/// - 그래야 개발 단계에서 익셉션이 발생해서 패킷 키가 중복되는 것을 알 수 있으므로
+		/// - 패킷 키가 중복될 경우 Dictionary에 추가할 때 익셉션 발생
+		/// - 개발 단계에서 모든 종류의 패킷을 사용한다면 등록되지 않은 패킷을 사용할 때 익셉션이 뜨겠지만,
+		///   그렇지 않은 경우도 있으므로 익셉션이 발생하는 코드를 릴리즈 하는 건 위험
+		/// - 유닛테스트에서 모든 패킷 등록이 중복 없이 됐는지 체크하는 게 좋을 것 같음
 		/// </remarks>
 		public static void RegisterPacket(K key, Type type)
 		{
 			Console.WriteLine("PacketFactory.RegisterPacket");
-			packets.Add(key, type);
+			try
+			{
+				// 키가 중복되는 경우를 보여주기 위해 키 존재 체크를 하지 않았음
+				packets.Add(key, type);
+
+				// 실제 릴리즈 할 때는 익셉션 발생을 피하기 위해 키가 존재하는 지 체크하는 게 좋음
+				// 개발 단계에서 키 중복 체크는 유닛테스트 활용
+				/*
+				if (!packets.ContainsKey(key))
+				{
+					packets.Add(key, type);
+				}
+				*/
+			}
+			catch (Exception ex)
+			{
+				// 키가 중복됐을 경우 익셉션 발생!
+				Console.WriteLine("================================================================================");
+				Console.WriteLine($"EXCEPTION: {ex.GetType().Name}, {ex.Message}");
+				Console.WriteLine("PacketFactory.RegisterPacket: FAILED!!!");
+				Console.WriteLine("================================================================================");
+			}
 		}
 
 		/// <summary>
