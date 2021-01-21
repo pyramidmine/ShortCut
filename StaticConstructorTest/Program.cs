@@ -13,8 +13,13 @@ namespace StaticConstructorTest
 		{
 			Console.WriteLine("Hello World!");
 
-			Console.WriteLine("Create login packet...");
-			const int packetKey = 1;
+			TestCreatePacket(1);
+		}
+
+		private static void TestCreatePacket(int packetKey)
+		{
+			Console.WriteLine($"Program.TestCreatePacket: packetKey={packetKey}");
+
 			var packet = PacketFactory.CreatePacket(packetKey);
 			if (packet != null)
 			{
@@ -51,8 +56,13 @@ namespace StaticConstructorTest
 		/// </summary>
 		static LoginPacket()
 		{
-			Console.WriteLine("LoginPacket.ctor");
+			Console.WriteLine("LoginPacket.sctor");
 			PacketFactory.RegisterPacket(1, typeof(LoginPacket));
+		}
+
+		public LoginPacket()
+		{
+			Console.WriteLine("LoginPacket.ctor");
 		}
 
 		override public string Description { get { return "Login Packet"; } }
@@ -135,9 +145,10 @@ namespace StaticConstructorTest
 		/// <returns></returns>
 		public static Packet CreatePacket(K key)
 		{
+			Console.WriteLine($"PacketFactory.CreatePacket: key={key}");
 			if (packets.ContainsKey(key))
 			{
-				return (Packet)Activator.CreateInstance(packets[key].GetType());
+				return (Packet)Activator.CreateInstance(packets[key]);
 			}
 			return default;
 		}
