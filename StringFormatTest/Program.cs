@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,8 @@ namespace StringFormatTest
 				Console.WriteLine(formatted);
 			}
 			*/
-			TestDateTimeFormat(true);
+			TestDateTimeFormat(false);
+			TestByteOrder(true);
 		}
 
 		private static void TestDateTimeFormat(bool enabled)
@@ -49,6 +51,22 @@ namespace StringFormatTest
 			Console.WriteLine($"String (HH, fff): {dt.ToString("yyyy-MM-dd HH:mm:ss.fff")}");
 			// 출력: hh는 12시간제. FFF는 뒤 0을 표시하지 않음
 			Console.WriteLine($"String (hh, FFF): {dt.ToString("yyyy-MM-dd hh:mm:ss.FFF")}");
+		}
+
+		private static void TestByteOrder(bool enabled)
+		{
+			if (!enabled)
+			{
+				return;
+			}
+
+			const int pageNum = 11;
+			const int isLastPageTrue = 1;
+
+			// 데이터를 바이트 배열로 변환
+			byte[] pageNumBytes = BitConverter.GetBytes(pageNum);
+			// 변환된 바이트 배열 출력
+			Console.WriteLine($"Byte order of value {pageNum}: {BitConverter.ToString(pageNumBytes)}");
 		}
 	}
 }
