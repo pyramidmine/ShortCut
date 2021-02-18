@@ -9,7 +9,8 @@ namespace DataStructureTest
 	{
 		private static void Main()
 		{
-			TestHashSetDuplicatedInitialization(true);
+			TestHashSetDuplicatedInitialization(false);
+			TestStringListExtraction(true);
 		}
 
 		/// <summary>
@@ -50,6 +51,48 @@ namespace DataStructureTest
 				Console.WriteLine($"EXCEPTION, Location={MethodBase.GetCurrentMethod()}, Type={ex.GetType()}, Message={ex.Message}");
 			}
 
+		}
+
+		private static void TestStringListExtraction(bool enabled)
+		{
+			if (!enabled)
+			{
+				return;
+			}
+
+			List<string> names = new List<string> { "ROW1", "ROW2", "ROW3", "ROW4" };
+
+			// ROW1 찾는 경우 나머지는 ROW2, ROW3, ROW4
+			{
+				string nameToFind = "ROW1";
+				List<string> remains = names.Where(name => string.Compare(name, nameToFind) != 0).ToList();
+				Console.WriteLine($"Name to find: {nameToFind}");
+				Console.WriteLine($"Remains: {string.Join(',', remains.ToArray())}");
+			}
+
+			// ROW2 찾는 경우 나머지는 ROW1, ROW3, ROW4
+			{
+				string nameToFind = "ROW2";
+				List<string> remains = names.Where(name => string.Compare(name, nameToFind) != 0).ToList();
+				Console.WriteLine($"Name to find: {nameToFind}");
+				Console.WriteLine($"Remains: {string.Join(',', remains.ToArray())}");
+			}
+
+			// ROW3 찾는 경우 나머지는 ROW1, ROW2, ROW4
+			{
+				string nameToFind = "ROW3";
+				List<string> remains = names.Where(name => string.Compare(name, nameToFind) != 0).ToList();
+				Console.WriteLine($"Name to find: {nameToFind}");
+				Console.WriteLine($"Remains: {string.Join(',', remains.ToArray())}");
+			}
+
+			// ROW4 찾는 경우 나머지는 ROW1, ROW2, ROW3
+			{
+				string nameToFind = "ROW4";
+				List<string> remains = names.Where(name => string.Compare(name, nameToFind) != 0).ToList();
+				Console.WriteLine($"Name to find: {nameToFind}");
+				Console.WriteLine($"Remains: {string.Join(',', remains.ToArray())}");
+			}
 		}
 	}
 }
