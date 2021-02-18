@@ -10,6 +10,35 @@ namespace ListTest
 		{
 			TestStringListReference(false);
 			TestListReference(false);
+			TestByteArrayReference(false);
+		}
+
+		private static void TestByteArrayReference(bool enabled = true)
+		{
+			if (!enabled)
+			{
+				return;
+			}
+
+			// 소스 패킷
+			MockPacket srcPacket = new MockPacket(1, new MockPacketBody(1, Encoding.UTF8.GetBytes("Hello")));
+			// 타겟 패킷: 소스 패킷의 바디의 데이터 부분만 참조
+			MockPacket tgtPacket = new MockPacket(2, new MockPacketBody(1, srcPacket.Bodies[0].Data));
+
+			Console.WriteLine($"Source Packet, data:{Encoding.UTF8.GetString(srcPacket.Bodies[0].Data)}");
+			Console.WriteLine($"Target Packet, data:{Encoding.UTF8.GetString(tgtPacket.Bodies[0].Data)}");
+
+			// 소스 패킷의 바디의 데이터 변경 (기존 데이터 변경)
+			srcPacket.Bodies[0].Data[1] = 97;
+
+			Console.WriteLine($"Source Packet, data:{Encoding.UTF8.GetString(srcPacket.Bodies[0].Data)}");
+			Console.WriteLine($"Target Packet, data:{Encoding.UTF8.GetString(tgtPacket.Bodies[0].Data)}");
+
+			// 소스 패킷의 바디의 데이터 변경 (새로 할당)
+			srcPacket.Bodies[0].Data = Encoding.UTF8.GetBytes("World");
+
+			Console.WriteLine($"Source Packet, data:{Encoding.UTF8.GetString(srcPacket.Bodies[0].Data)}");
+			Console.WriteLine($"Target Packet, data:{Encoding.UTF8.GetString(tgtPacket.Bodies[0].Data)}");
 		}
 
 		/// <summary>
@@ -126,11 +155,27 @@ namespace ListTest
 	{
 		public int PacketType { get; set; }
 		public List<MockPacketBody> Bodies { get; set; }
+		public MockPacket()
+		{
+		}
+		public MockPacket(int packetType, MockPacketBody mockPacketBody)
+		{
+			PacketType = packetType;
+			Bodies = new List<MockPacketBody> { mockPacketBody };
+		}
 	}
 
 	internal class MockPacketBody
 	{
 		public int CompressionType { get; set; }
 		public byte[] Data { get; set; }
+		public MockPacketBody()
+		{
+		}
+		public MockPacketBody(int compressionType, byte[] data)
+		{
+			CompressionType = compressionType;
+			Data = data;
+		}
 	}
 }
