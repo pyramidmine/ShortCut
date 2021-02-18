@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinqTest
 {
-	class Profile
+	internal class Profile
 	{
 		public string Name { get; set; }
 		public int Height { get; set; }
@@ -18,21 +18,21 @@ namespace LinqTest
 		}
 	}
 
-	class Product
+	internal class Product
 	{
 		public string Title { get; set; }
 		public string Star { get; set; }
 	}
 
-	class Students
+	internal class Students
 	{
 		public string Name { get; set; }
 		public List<int> Scores { get; set; }
 	}
 
-	class Program
+	internal static class Program
 	{
-		static List<Profile> profiles = new List<Profile>
+		private static readonly List<Profile> profiles = new List<Profile>
 		{
 			new Profile("정우성", 186),
 			new Profile("김태희", 158),
@@ -41,7 +41,7 @@ namespace LinqTest
 			new Profile("하동훈", 171)
 		};
 
-		static List<Product> products = new List<Product>
+		private static readonly List<Product> products = new List<Product>
 		{
 			new Product {Title = "비트", Star = "정우성"},
 			new Product {Title = "아이리스", Star = "김태희"},
@@ -50,7 +50,7 @@ namespace LinqTest
 			new Product {Title = "솔로예찬", Star = "이문세"},
 		};
 
-		static List<Students> students = new List<Students>
+		private static readonly List<Students> students = new List<Students>
 		{
 			new Students {Name = "문종헌", Scores = new List<int>{ 97, 72, 81, 60 }},
 			new Students {Name = "송용직", Scores = new List<int>{ 75, 84, 91, 39 }},
@@ -58,13 +58,13 @@ namespace LinqTest
 			new Students {Name = "김경현", Scores = new List<int>{ 97, 89, 85, 82 }},
 		};
 
-		static void Main(string[] args)
+		internal static void Main()
 		{
 			// 기본 Linq
 			var sortedProfiles = from profile in profiles
 								 where profile.Height < 175
 								 orderby profile.Height
-								 select new { Name = profile.Name, InchHeight = profile.Height * 0.393 };
+								 select new { profile.Name, InchHeight = profile.Height * 0.393 };
 
 			foreach (var profile in sortedProfiles)
 			{
