@@ -1,15 +1,25 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ConfigurationUnitTests
 {
 	public class ConfigurationTest
 	{
+		private readonly ITestOutputHelper output;
+
+		public ConfigurationTest(ITestOutputHelper output)
+		{
+			this.output = output;
+		}
+
 		/// <summary>
 		/// 환경변수 테스트
 		/// </summary>
@@ -381,5 +391,78 @@ namespace ConfigurationUnitTests
 			// 서브 컨피규레이션 파일: 설정항목이 잘 들어갔는지 확인
 			Assert.Equal("true", config["Packet,1,1,1:enabled"]);
 		}
+
+		/// <summary>
+		/// 메모리에 만든 컨피규레이션도 파일과 동일하게 설정하고 사용할 수 있는 지 테스트
+		/// </summary>
+		[Fact]
+		public void Test_MemoryConfiguration()
+		{
+			const string sectionName = "ServerOptions";
+			const string ip = "192.168.10.181";
+			const int port = 8998;
+
+			// 메모리에 Json 형식으로 컨피규레이션 작성
+			string configContents = $"" +
+				$"{{'{sectionName}':{{" +
+					$"'IP':'{ip}', " +
+					$"'Port':'{port}'}}" +
+				$"}}";
+
+			//
+			// 메모리에 작성된 컨피규레이션 내용을 파일에 쓰고 읽기
+			//
+			var configFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Test_MemoryConfiguration.json");
+			try
+			{
+				File.WriteAllText(configFilePath, configContents);
+				var config = new ConfigurationBuilder()
+					.AddJsonFile(configFilePath)
+					.Build();
+				ServerOptions so = new ServerOptions();
+				config.Bind(sectionName, so);
+				Assert.Equal(ip, so.IP);
+				Assert.Equal(port, so.Port);
+			}
+			catch (Exception ex)
+			{
+				output.WriteLine($"Test_MemoryConfiguration, Exception:{ex.GetType()}, Message:{ex.Message}");
+			}
+			finally
+			{
+				if (File.Exists(configFilePath))
+				{
+					File.Delete(configFilePath);
+				}
+			}
+
+			//
+			// 메모리에 작성된 컨피규레이션 내용을 바로 읽기
+			//
+			try
+			{
+				using var ms = new MemoryStream(Encoding.UTF8.GetBytes(configContents));
+				var config = new ConfigurationBuilder()
+					.AddJsonStream(ms)
+					.Build();
+				ServerOptions so = new ServerOptions();
+				config.Bind(sectionName, so);
+				Assert.Equal(ip, so.IP);
+				Assert.Equal(port, so.Port);
+			}
+			catch (Exception ex)
+			{
+				output.WriteLine($"Test_MemoryConfiguration, Exception:{ex.GetType()}, Message:{ex.Message}");
+			}
+		}
+
+		/// <summary>
+		/// 컨피규레이션 내용을 담을 클래스
+		/// </summary>
+		public class ServerOptions
+		{
+			public string IP { get; set; }
+			public int Port { get; set; }
+		};
 	}
 }
